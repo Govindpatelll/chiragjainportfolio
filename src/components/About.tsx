@@ -1,6 +1,5 @@
-
 import React, { useEffect, useRef } from "react";
-import { Calendar, MapPin, Briefcase, User } from "lucide-react";
+import { Calendar, MapPin, Briefcase, User, Linkedin } from "lucide-react";
 
 const About = () => {
   const containerRef = useRef<HTMLDivElement>(null);
