@@ -45,6 +45,36 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isOpen) {
+        const target = event.target as HTMLElement;
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenu && !mobileMenu.contains(target) && !target.closest('button[aria-label="Toggle Menu"]')) {
+          setIsOpen(false);
+        }
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
+
+  // Prevent scrolling when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-10 transition-all duration-300 ${
@@ -93,6 +123,7 @@ const Navbar = () => {
 
       {/* Mobile Nav Menu */}
       <div
+        id="mobile-menu"
         className={`fixed inset-0 z-40 bg-dark-bg/95 backdrop-blur-xl transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } md:hidden`}
@@ -106,7 +137,7 @@ const Navbar = () => {
                 activeSection === item.href.substring(1)
                   ? "text-accent-blue"
                   : "text-light-gray"
-              }`}
+              } hover:text-accent-blue transition-colors duration-300`}
               onClick={() => setIsOpen(false)}
             >
               {item.name}

@@ -1,16 +1,59 @@
 
 import React, { useEffect, useRef } from "react";
 
+interface ExperienceItem {
+  title: string;
+  company: string;
+  period: string;
+  description: string[];
+  technologies: string[];
+}
+
 const Experience = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
+
+  const experiences: ExperienceItem[] = [
+    {
+      title: "Data Engineer Intern",
+      company: "Confidential Client Project",
+      period: "Jan 2023 - Apr 2023",
+      description: [
+        "Performed comprehensive Exploratory Data Analysis (EDA) to uncover initial patterns and insights from raw customer data",
+        "Implemented rigorous data cleaning and standardization techniques to ensure high data quality and consistency",
+        "Engineered relevant features for model input, significantly improving predictive performance by 28%",
+        "Applied train/test split methodologies for accurate model validation and assessment",
+        "Created advanced visualizations using Matplotlib, Seaborn, and Plotly to communicate findings to non-technical stakeholders",
+        "Collaborated with cross-functional teams to integrate data pipeline into the client's existing infrastructure"
+      ],
+      technologies: ["Python", "Pandas", "NumPy", "Scikit-learn", "SQL", "Matplotlib", "Seaborn", "Plotly"]
+    }
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in");
+            if (titleRef.current) {
+              titleRef.current.classList.add("animate-fade-in");
+            }
+            
+            setTimeout(() => {
+              if (timelineRef.current) {
+                timelineRef.current.classList.add("animate-fade-in");
+                
+                // Animate experience cards
+                const items = timelineRef.current.querySelectorAll(".experience-item");
+                items.forEach((item, index) => {
+                  setTimeout(() => {
+                    item.classList.add("animate-fade-in-right");
+                  }, 300 * index);
+                });
+              }
+            }, 400);
+            
             observer.unobserve(entry.target);
           }
         });
@@ -18,75 +61,102 @@ const Experience = () => {
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    if (timelineRef.current) {
-      observer.observe(timelineRef.current);
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-      if (timelineRef.current) {
-        observer.unobserve(timelineRef.current);
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
       }
     };
   }, []);
 
-  const experiencePoints = [
-    "Performed comprehensive Exploratory Data Analysis (EDA) to identify patterns and insights",
-    "Implemented data cleaning techniques to improve data quality and consistency",
-    "Standardized data formats and structures to ensure compatibility across systems",
-    "Developed train/test split methodologies for robust model validation",
-    "Engineered features to enhance model performance and predictive power",
-    "Created interactive visualizations using Matplotlib, Seaborn, and Plotly to communicate findings",
-    "Collaborated with cross-functional teams to translate business requirements into technical solutions",
-    "Documented processes and methodologies to ensure knowledge transfer and project continuity"
-  ];
+  // Animation for skills progress bars
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      
+      const containerRect = containerRef.current.getBoundingClientRect();
+      
+      if (containerRect.top < window.innerHeight && containerRect.bottom > 0) {
+        // When experience section is visible, animate progress bars
+        const progressBars = document.querySelectorAll('.skill-category .bg-gradient-to-r');
+        progressBars.forEach((bar) => {
+          const barElement = bar as HTMLElement;
+          const parentElement = barElement.parentElement as HTMLElement;
+          const percentage = parentElement.previousElementSibling?.querySelector('.text-sm')?.textContent;
+          
+          if (percentage) {
+            // Set the width based on the percentage
+            barElement.style.width = percentage;
+          }
+        });
+      }
+    };
+
+    // Call it once to check initial visibility
+    handleScroll();
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <section id="experience" className="section-padding relative overflow-hidden bg-dark-surface">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <div ref={sectionRef} className="opacity-0">
-          <h2 className="section-title">My Journey</h2>
+    <section 
+      id="experience" 
+      className="section-padding relative"
+      ref={containerRef}
+    >
+      <div className="absolute inset-0 z-0 overflow-hidden opacity-5">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-accent-blue rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent-blue rounded-full filter blur-3xl"></div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-6 md:px-10 relative z-10">
+        <h2 ref={titleRef} className="section-title text-center opacity-0">
+          My Journey
+        </h2>
+        
+        <div 
+          ref={timelineRef} 
+          className="mt-16 relative opacity-0"
+        >
+          {/* Timeline bar */}
+          <div className="absolute left-0 md:left-1/2 md:transform md:-translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-accent-blue via-white/20 to-transparent"></div>
           
-          <div ref={timelineRef} className="mt-12 opacity-0">
-            <div className="glass-card p-8 rounded-xl relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-blue"></div>
+          {experiences.map((exp, index) => (
+            <div 
+              key={index}
+              className="experience-item opacity-0 relative mb-16 md:w-1/2 md:even:ml-auto md:odd:mr-auto md:pl-8 md:even:pl-0 md:even:pr-8"
+            >
+              {/* Timeline dot */}
+              <div className="hidden md:block absolute left-0 md:left-auto md:right-0 md:even:left-0 md:even:right-auto top-0 w-4 h-4 rounded-full bg-accent-blue shadow-blue-glow transform -translate-y-1/2 md:even:translate-x-1/2 md:odd:-translate-x-1/2"></div>
               
-              <div className="flex flex-col md:flex-row gap-6 md:gap-10">
-                <div className="md:w-1/3">
-                  <div className="bg-accent-blue/10 rounded-lg p-4 border border-accent-blue/20">
-                    <h3 className="text-2xl font-medium mb-2">Data Engineer Intern</h3>
-                    <p className="text-medium-gray mb-2">Confidential Customer Project</p>
-                    <p className="text-white/70 text-sm">4-month Internship</p>
-                  </div>
+              <div className="glass-card glass-card-hover rounded-xl p-6 md:p-8">
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                  <h3 className="text-xl font-medium text-white">{exp.title}</h3>
+                  <span className="text-accent-blue font-medium mt-1 md:mt-0">{exp.period}</span>
                 </div>
                 
-                <div className="md:w-2/3">
-                  <h4 className="text-xl font-medium mb-4 text-white">
-                    Customer Project Focus
-                  </h4>
-                  
-                  <ul className="space-y-3">
-                    {experiencePoints.map((point, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <div className="bg-accent-blue/20 rounded-full p-1 mt-1">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-blue" />
-                          </svg>
-                        </div>
-                        <p className="text-light-gray/90">{point}</p>
-                      </li>
-                    ))}
-                  </ul>
+                <p className="text-xl mb-4 text-white/90">{exp.company}</p>
+                
+                <ul className="list-disc list-inside space-y-2 mb-6">
+                  {exp.description.map((point, i) => (
+                    <li key={i} className="text-light-gray">{point}</li>
+                  ))}
+                </ul>
+                
+                <div className="flex flex-wrap gap-2">
+                  {exp.technologies.map((tech, i) => (
+                    <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm">
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

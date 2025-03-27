@@ -6,6 +6,7 @@ const AnimatedCursor = () => {
   const [hidden, setHidden] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [linkHovered, setLinkHovered] = useState(false);
+  const [buttonHovered, setButtonHovered] = useState(false);
 
   useEffect(() => {
     const addEventListeners = () => {
@@ -51,10 +52,19 @@ const AnimatedCursor = () => {
         link.addEventListener("mouseenter", () => setLinkHovered(true));
         link.addEventListener("mouseleave", () => setLinkHovered(false));
       });
+      
+      const allButtons = document.querySelectorAll(".btn-primary, .btn-outline");
+      
+      allButtons.forEach((button) => {
+        button.addEventListener("mouseenter", () => setButtonHovered(true));
+        button.addEventListener("mouseleave", () => setButtonHovered(false));
+      });
     };
 
     addEventListeners();
-    handleLinkHoverEvents();
+    
+    // Add the event handlers after a small delay to ensure all DOM elements are loaded
+    setTimeout(handleLinkHoverEvents, 500);
 
     // Ensure cursor follows touch on mobile
     const touchHandler = (e: TouchEvent) => {
@@ -73,11 +83,21 @@ const AnimatedCursor = () => {
     };
   }, []);
 
-  const cursorClasses = `custom-cursor-dot bg-white ${hidden ? "opacity-0" : "opacity-100"}`;
-  const cursorRingClasses = `custom-cursor border border-white ${hidden ? "opacity-0" : "opacity-100"} ${clicked ? "scale-75" : ""} ${linkHovered ? "scale-150" : ""}`;
+  const cursorClasses = `custom-cursor-dot ${hidden ? "opacity-0" : "opacity-100"} ${buttonHovered ? "bg-accent-blue" : "bg-white"}`;
   
-  const cursorDotStyle = { left: `${position.x}px`, top: `${position.y}px` };
-  const cursorRingStyle = { left: `${position.x}px`, top: `${position.y}px` };
+  const cursorRingClasses = `custom-cursor border ${buttonHovered ? "border-accent-blue" : "border-white"} ${hidden ? "opacity-0" : "opacity-100"} ${clicked ? "scale-75" : ""} ${linkHovered ? "scale-150" : ""} ${buttonHovered ? "scale-200" : ""}`;
+  
+  const cursorDotStyle = { 
+    left: `${position.x}px`, 
+    top: `${position.y}px`,
+    transition: "left 0.15s ease-out, top 0.15s ease-out, background-color 0.3s ease"
+  };
+  
+  const cursorRingStyle = { 
+    left: `${position.x}px`, 
+    top: `${position.y}px`,
+    transition: "left 0.2s ease-out, top 0.2s ease-out, transform 0.3s ease, border-color 0.3s ease"
+  };
 
   return (
     <div className="hidden md:block">

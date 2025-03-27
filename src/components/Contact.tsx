@@ -1,55 +1,29 @@
 
 import React, { useEffect, useRef, useState } from "react";
+import { Send, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const formRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
-    message: "",
+    message: ""
   });
-  
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-fade-in");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    if (formRef.current) {
-      observer.observe(formRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-      if (formRef.current) {
-        observer.unobserve(formRef.current);
-      }
-    };
-  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -58,163 +32,222 @@ const Contact = () => {
     
     // Simulate form submission
     setTimeout(() => {
-      toast({
-        title: "Message Sent",
-        description: "Thank you for your message. I'll get back to you soon!",
-      });
+      setIsSubmitting(false);
       
+      // Reset form
       setFormData({
         name: "",
         email: "",
         subject: "",
-        message: "",
+        message: ""
       });
       
-      setIsSubmitting(false);
+      // Show success toast
+      toast({
+        title: "Message sent!",
+        description: "Thanks for reaching out. I'll get back to you soon.",
+      });
     }, 1500);
   };
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (titleRef.current) {
+              titleRef.current.classList.add("animate-fade-in");
+            }
+            
+            setTimeout(() => {
+              if (contentRef.current) {
+                contentRef.current.classList.add("animate-fade-in");
+              }
+            }, 300);
+            
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <section id="contact" className="section-padding relative overflow-hidden bg-dark-surface">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <div ref={sectionRef} className="opacity-0">
-          <h2 className="section-title">Get In Touch</h2>
+    <section
+      id="contact"
+      className="section-padding relative overflow-hidden"
+      ref={containerRef}
+    >
+      <div className="absolute inset-0 z-0 overflow-hidden opacity-5">
+        <div className="absolute top-1/3 right-1/3 w-96 h-96 bg-accent-blue rounded-full filter blur-3xl"></div>
+        <div className="absolute bottom-1/3 left-1/3 w-96 h-96 bg-accent-blue rounded-full filter blur-3xl"></div>
+      </div>
+      
+      <div className="max-w-5xl mx-auto px-6 md:px-10 relative z-10">
+        <h2 ref={titleRef} className="section-title text-center opacity-0">
+          Let's Connect
+        </h2>
+        
+        <div 
+          ref={contentRef} 
+          className="mt-12 opacity-0"
+        >
+          <div className="text-center mb-12">
+            <p className="text-xl text-light-gray/90 max-w-2xl mx-auto">
+              Interested in collaborating or have a question? Feel free to reach out. I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+            </p>
+          </div>
           
-          <div className="mt-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <div>
-                <h3 className="text-2xl font-medium mb-4">Let's Connect</h3>
-                <p className="mb-6">
-                  Interested in working together or have a question about my work?
-                  Feel free to reach out using the contact form or through any of the channels below.
-                </p>
+          <div className="glass-card rounded-2xl overflow-hidden">
+            <div className="md:grid md:grid-cols-5">
+              <div className="bg-gradient-to-br from-accent-blue to-accent-blue-light p-8 md:p-10 md:col-span-2 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-2xl font-semibold text-white mb-6">Contact Information</h3>
+                  
+                  <div className="space-y-4">
+                    <p className="flex items-start gap-3 text-white/90">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="2"/>
+                        <path d="M3 7L12 13L21 7" stroke="currentColor" strokeWidth="2"/>
+                      </svg>
+                      <a href="mailto:chirag.jain@example.com" className="hover:text-white transition-colors">
+                        chirag.jain@example.com
+                      </a>
+                    </p>
+                    
+                    <p className="flex items-start gap-3 text-white/90">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 8V16C21 18.2091 19.2091 20 17 20H7C4.79086 20 3 18.2091 3 16V8M3.05 8L12 14L20.95 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M3 8C3 5.79086 4.79086 4 7 4H17C19.2091 4 21 5.79086 21 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      </svg>
+                      <span>
+                        Location: Remote / Location Flexible
+                      </span>
+                    </p>
+                  </div>
+                </div>
                 
-                <div className="space-y-4 mt-8">
-                  <a 
-                    href="mailto:chirag.jain@example.com" 
-                    className="flex items-center gap-3 p-4 glass-card glass-card-hover rounded-lg group"
-                  >
-                    <div className="bg-accent-blue/10 p-3 rounded-full group-hover:bg-accent-blue/20 transition-colors">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-blue" />
-                        <path d="M22 6l-10 7-10-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-blue" />
-                      </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-medium">Email</h4>
-                      <p className="text-medium-gray text-sm">chirag.jain@example.com</p>
-                    </div>
-                  </a>
+                <div className="mt-10">
+                  <h4 className="text-xl font-medium text-white mb-4">Connect with me</h4>
                   
-                  <a 
-                    href="https://linkedin.com/in/" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="flex items-center gap-3 p-4 glass-card glass-card-hover rounded-lg group"
-                  >
-                    <div className="bg-accent-blue/10 p-3 rounded-full group-hover:bg-accent-blue/20 transition-colors">
+                  <div className="flex gap-4">
+                    <a 
+                      href="https://linkedin.com/in/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors"
+                      aria-label="LinkedIn"
+                    >
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-blue" />
-                        <rect x="2" y="9" width="4" height="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-blue" />
-                        <circle cx="4" cy="4" r="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-blue" />
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <rect x="2" y="9" width="4" height="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        <circle cx="4" cy="4" r="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-medium">LinkedIn</h4>
-                      <p className="text-medium-gray text-sm">in/chirag-jain</p>
-                    </div>
-                  </a>
-                  
-                  <a 
-                    href="https://github.com/" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="flex items-center gap-3 p-4 glass-card glass-card-hover rounded-lg group"
-                  >
-                    <div className="bg-accent-blue/10 p-3 rounded-full group-hover:bg-accent-blue/20 transition-colors">
+                    </a>
+                    
+                    <a 
+                      href="https://github.com/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors"
+                      aria-label="GitHub"
+                    >
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent-blue" />
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
-                    </div>
-                    <div>
-                      <h4 className="font-medium">GitHub</h4>
-                      <p className="text-medium-gray text-sm">github.com/chirag-jain</p>
-                    </div>
-                  </a>
+                    </a>
+                  </div>
                 </div>
               </div>
               
-              <div ref={formRef} className="opacity-0">
-                <form onSubmit={handleSubmit} className="glass-card p-6 rounded-xl">
-                  <div className="mb-4">
-                    <label htmlFor="name" className="block text-white mb-2">Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full bg-dark-bg border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue transition-colors"
-                    />
+              <div className="p-8 md:p-10 md:col-span-3">
+                <h3 className="text-2xl font-semibold text-white mb-6">Send a Message</h3>
+                
+                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="name" className="block text-medium-gray mb-2">Your Name</label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="w-full bg-dark-bg border border-white/10 rounded-lg px-4 py-3 text-white focus:border-accent-blue focus:outline-none focus:ring-1 focus:ring-accent-blue transition-colors"
+                        required
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="email" className="block text-medium-gray mb-2">Your Email</label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full bg-dark-bg border border-white/10 rounded-lg px-4 py-3 text-white focus:border-accent-blue focus:outline-none focus:ring-1 focus:ring-accent-blue transition-colors"
+                        required
+                      />
+                    </div>
                   </div>
                   
-                  <div className="mb-4">
-                    <label htmlFor="email" className="block text-white mb-2">Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full bg-dark-bg border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue transition-colors"
-                    />
-                  </div>
-                  
-                  <div className="mb-4">
-                    <label htmlFor="subject" className="block text-white mb-2">Subject</label>
+                  <div>
+                    <label htmlFor="subject" className="block text-medium-gray mb-2">Subject</label>
                     <input
                       type="text"
                       id="subject"
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
+                      className="w-full bg-dark-bg border border-white/10 rounded-lg px-4 py-3 text-white focus:border-accent-blue focus:outline-none focus:ring-1 focus:ring-accent-blue transition-colors"
                       required
-                      className="w-full bg-dark-bg border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue transition-colors"
                     />
                   </div>
                   
-                  <div className="mb-6">
-                    <label htmlFor="message" className="block text-white mb-2">Message</label>
+                  <div>
+                    <label htmlFor="message" className="block text-medium-gray mb-2">Message</label>
                     <textarea
                       id="message"
                       name="message"
                       value={formData.message}
                       onChange={handleChange}
-                      required
+                      className="w-full bg-dark-bg border border-white/10 rounded-lg px-4 py-3 text-white focus:border-accent-blue focus:outline-none focus:ring-1 focus:ring-accent-blue transition-colors"
                       rows={5}
-                      className="w-full bg-dark-bg border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-accent-blue focus:ring-1 focus:ring-accent-blue transition-colors resize-none"
+                      required
                     ></textarea>
                   </div>
                   
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="btn-primary w-full flex items-center justify-center"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Sending...
-                      </>
-                    ) : (
-                      "Send Message"
-                    )}
-                  </button>
+                  <div>
+                    <button
+                      type="submit"
+                      className="btn-primary w-full md:w-auto flex items-center justify-center gap-2"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 size={18} className="animate-spin" />
+                          <span>Sending...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send size={18} />
+                          <span>Send Message</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </form>
               </div>
             </div>
