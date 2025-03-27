@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Menu, X, Mail, Phone } from "lucide-react";
+import { Menu, X, Mail, Phone, ExternalLink } from "lucide-react";
 
 interface NavItem {
   name: string;
@@ -21,10 +21,19 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
+      const currentScrollPos = window.pageYOffset;
+      
+      // Auto-hide navbar on scroll down, show on scroll up
+      const isVisible = prevScrollPos > currentScrollPos || currentScrollPos < 10;
+      setPrevScrollPos(currentScrollPos);
+      setVisible(isVisible);
+      
       setScrolled(scrollPosition > 50);
 
       // Determine which section is in view
@@ -44,7 +53,7 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [prevScrollPos]);
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -80,14 +89,14 @@ const Navbar = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 px-6 md:px-10 transition-all duration-300 ${
         scrolled
-          ? "py-4 bg-dark-bg/80 backdrop-blur-xl border-b border-white/5"
+          ? "py-3 bg-dark-bg/90 backdrop-blur-xl border-b border-white/5 shadow-md"
           : "py-6"
-      }`}
+      } ${visible ? 'translate-y-0' : '-translate-y-full'}`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <a
           href="#home"
-          className="text-xl font-medium text-white flex items-center gap-2"
+          className="text-xl font-medium text-white flex items-center gap-2 transform transition-all duration-300 hover:scale-105"
         >
           <span className="text-accent-blue">C</span>
           <span>Chirag Jain</span>
@@ -96,9 +105,9 @@ const Navbar = () => {
         <div className="hidden md:flex items-center gap-4">
           <a 
             href="mailto:chiragjainswm@gmail.com" 
-            className="text-medium-gray hover:text-white transition-colors flex items-center gap-1.5 text-sm"
+            className="text-medium-gray hover:text-white transition-all duration-300 flex items-center gap-1.5 text-sm group"
           >
-            <Mail size={16} />
+            <Mail size={16} className="group-hover:text-accent-blue" />
             <span>chiragjainswm@gmail.com</span>
           </a>
           
@@ -106,9 +115,9 @@ const Navbar = () => {
           
           <a 
             href="tel:+917976075644" 
-            className="text-medium-gray hover:text-white transition-colors flex items-center gap-1.5 text-sm"
+            className="text-medium-gray hover:text-white transition-all duration-300 flex items-center gap-1.5 text-sm group"
           >
-            <Phone size={16} />
+            <Phone size={16} className="group-hover:text-accent-blue" />
             <span>+91 7976075644</span>
           </a>
         </div>
@@ -126,26 +135,27 @@ const Navbar = () => {
           ))}
           <a
             href="#contact"
-            className="btn-primary ml-4"
+            className="btn-primary ml-4 py-2 px-4 group"
           >
             Get in Touch
+            <ExternalLink size={14} className="ml-1 transform transition-all duration-300 group-hover:translate-x-1" />
           </a>
         </nav>
 
         {/* Mobile Nav Toggle */}
         <button
-          className="md:hidden text-white"
+          className="md:hidden text-white glass-card w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/10 transition-all duration-300"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle Menu"
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
+          {isOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
       {/* Mobile Nav Menu */}
       <div
         id="mobile-menu"
-        className={`fixed inset-0 z-40 bg-dark-bg/95 backdrop-blur-xl transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-0 z-40 bg-dark-bg/98 backdrop-blur-xl transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "translate-x-full"
         } md:hidden`}
       >
@@ -154,11 +164,11 @@ const Navbar = () => {
             <a
               key={item.name}
               href={item.href}
-              className={`text-xl ${
+              className={`text-xl transition-colors duration-300 transform hover:scale-110 ${
                 activeSection === item.href.substring(1)
                   ? "text-accent-blue"
                   : "text-light-gray"
-              } hover:text-accent-blue transition-colors duration-300`}
+              } hover:text-accent-blue`}
               onClick={() => setIsOpen(false)}
             >
               {item.name}
@@ -166,26 +176,27 @@ const Navbar = () => {
           ))}
           <a
             href="#contact"
-            className="btn-primary mt-8"
+            className="btn-primary mt-8 py-2.5 px-6 flex items-center gap-2 hover:shadow-blue-glow transform transition-all duration-300 hover:translate-y-[-2px]"
             onClick={() => setIsOpen(false)}
           >
-            Get in Touch
+            <span>Get in Touch</span>
+            <ExternalLink size={16} />
           </a>
           
-          <div className="mt-6 flex flex-col gap-3 items-center">
+          <div className="mt-6 flex flex-col gap-4 items-center">
             <a 
               href="mailto:chiragjainswm@gmail.com" 
-              className="text-medium-gray hover:text-white transition-colors flex items-center gap-1.5"
+              className="text-medium-gray hover:text-white transition-all duration-300 flex items-center gap-2 group"
             >
-              <Mail size={16} />
+              <Mail size={18} className="text-accent-blue" />
               <span>chiragjainswm@gmail.com</span>
             </a>
             
             <a 
               href="tel:+917976075644" 
-              className="text-medium-gray hover:text-white transition-colors flex items-center gap-1.5"
+              className="text-medium-gray hover:text-white transition-all duration-300 flex items-center gap-2 group"
             >
-              <Phone size={16} />
+              <Phone size={18} className="text-accent-blue" />
               <span>+91 7976075644</span>
             </a>
           </div>

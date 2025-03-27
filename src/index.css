@@ -111,23 +111,29 @@
   .btn-primary {
     @apply px-6 py-3 bg-accent-blue text-white rounded-lg font-medium
            transition-all duration-300 hover:bg-accent-blue-light
-           hover:shadow-blue-glow active:scale-[0.98];
+           hover:shadow-blue-glow active:scale-[0.98] flex items-center justify-center;
   }
 
   .btn-outline {
     @apply px-6 py-3 bg-transparent text-white rounded-lg font-medium
            border border-white/20 transition-all duration-300 
            hover:border-accent-blue hover:text-accent-blue
-           active:scale-[0.98];
+           active:scale-[0.98] flex items-center justify-center;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-3 bg-transparent text-white rounded-lg font-medium
+           transition-all duration-300 hover:bg-white/5
+           active:scale-[0.98] flex items-center justify-center gap-2;
   }
 
   .skill-card {
     @apply glass-card p-5 rounded-xl flex flex-col items-center justify-center text-center
-           transition-all duration-300 hover:shadow-blue-glow;
+           transition-all duration-300 hover:shadow-blue-glow transform hover:translate-y-[-5px] hover:bg-white/10;
   }
 
   .project-card {
-    @apply glass-card rounded-xl overflow-hidden transition-all duration-300 hover:shadow-blue-glow;
+    @apply glass-card rounded-xl overflow-hidden transition-all duration-300 hover:shadow-blue-glow transform hover:translate-y-[-5px] hover:bg-white/10;
   }
 
   .animated-gradient-text {
@@ -150,13 +156,23 @@
   }
 
   .custom-cursor {
-    @apply w-8 h-8 rounded-full fixed pointer-events-none z-50 mix-blend-difference;
+    @apply w-8 h-8 rounded-full fixed pointer-events-none z-50 mix-blend-difference border-2 border-white;
     transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, border-radius 0.3s, background 0.3s;
   }
 
   .custom-cursor-dot {
-    @apply w-2 h-2 rounded-full fixed pointer-events-none z-50 mix-blend-difference;
+    @apply w-2 h-2 rounded-full fixed pointer-events-none z-50 mix-blend-difference bg-white;
     transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, opacity 0.3s;
+  }
+
+  .custom-cursor.active {
+    @apply w-10 h-10 bg-accent-blue/50 border-accent-blue;
+  }
+
+  .custom-cursor-dot.active {
+    @apply opacity-0;
   }
 }
 
@@ -183,6 +199,18 @@
 
   .animate-scale-in {
     animation: scaleIn 0.6s ease-out forwards;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  .hover-glow {
+    @apply transition-all duration-300 hover:shadow-blue-glow;
   }
 
   @keyframes fadeIn {

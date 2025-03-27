@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from "react";
 import { Calendar, MapPin, Briefcase, User, Linkedin } from "lucide-react";
 
@@ -58,7 +59,10 @@ const About = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-10 relative z-10">
-        <h2 ref={headingRef} className="section-title opacity-0">
+        <h2 
+          ref={headingRef} 
+          className="section-title opacity-0 before:content-[''] before:absolute before:-bottom-3 before:left-0 before:w-10 before:h-1 before:bg-accent-blue before:rounded-full"
+        >
           About Me
         </h2>
 
@@ -80,35 +84,35 @@ const About = () => {
             </p>
 
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="glass-card p-4 rounded-lg flex items-center gap-3">
+              <div className="glass-card p-4 rounded-lg flex items-center gap-3 transform transition-all duration-300 hover:scale-105 hover:shadow-blue-glow cursor-pointer hover:bg-white/10">
                 <User size={20} className="text-accent-blue" />
                 <div>
                   <h3 className="text-sm text-medium-gray">Full Name</h3>
-                  <p className="text-white">Chirag Jain</p>
+                  <p className="text-white font-medium">Chirag Jain</p>
                 </div>
               </div>
 
-              <div className="glass-card p-4 rounded-lg flex items-center gap-3">
+              <div className="glass-card p-4 rounded-lg flex items-center gap-3 transform transition-all duration-300 hover:scale-105 hover:shadow-blue-glow cursor-pointer hover:bg-white/10">
                 <MapPin size={20} className="text-accent-blue" />
                 <div>
                   <h3 className="text-sm text-medium-gray">Location</h3>
-                  <p className="text-white">Remote / Flexible</p>
+                  <p className="text-white font-medium">Remote / Flexible</p>
                 </div>
               </div>
 
-              <div className="glass-card p-4 rounded-lg flex items-center gap-3">
+              <div className="glass-card p-4 rounded-lg flex items-center gap-3 transform transition-all duration-300 hover:scale-105 hover:shadow-blue-glow cursor-pointer hover:bg-white/10">
                 <Briefcase size={20} className="text-accent-blue" />
                 <div>
                   <h3 className="text-sm text-medium-gray">Experience</h3>
-                  <p className="text-white">Data Engineering</p>
+                  <p className="text-white font-medium">Data Engineering</p>
                 </div>
               </div>
 
-              <div className="glass-card p-4 rounded-lg flex items-center gap-3">
+              <div className="glass-card p-4 rounded-lg flex items-center gap-3 transform transition-all duration-300 hover:scale-105 hover:shadow-blue-glow cursor-pointer hover:bg-white/10">
                 <Calendar size={20} className="text-accent-blue" />
                 <div>
                   <h3 className="text-sm text-medium-gray">Availability</h3>
-                  <p className="text-white">Available Now</p>
+                  <p className="text-white font-medium">Available Now</p>
                 </div>
               </div>
             </div>
@@ -116,24 +120,24 @@ const About = () => {
           
           <div 
             ref={imageRef} 
-            className="opacity-0 glass-card rounded-2xl overflow-hidden p-1.5 relative h-[450px]"
+            className="opacity-0 glass-card rounded-2xl overflow-hidden p-1.5 relative h-[450px] group transform transition-all duration-500 hover:shadow-blue-glow"
           >
-            <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+            <div className="absolute inset-0 flex items-center justify-center overflow-hidden transition-transform duration-700 group-hover:scale-105">
               <img 
                 src="/lovable-uploads/3b01c9c2-501e-458d-a1af-112bf263f648.png" 
                 alt="Chirag Jain" 
-                className="w-full h-full object-cover rounded-xl"
+                className="w-full h-full object-cover rounded-xl transition-all duration-700"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-dark-bg/80 rounded-xl"></div>
-            <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-dark-bg/90 rounded-xl"></div>
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-center transform transition-all duration-300">
               <a 
                 href="https://www.linkedin.com/in/chirag-jain-aa566a205" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="btn-primary text-sm px-4 py-2 inline-flex items-center gap-1"
+                className="btn-primary text-sm px-4 py-2 inline-flex items-center gap-1 group hover:pl-5 hover:pr-5 transition-all duration-300"
               >
-                <Linkedin size={16} />
+                <Linkedin size={16} className="group-hover:animate-pulse" />
                 <span>Connect on LinkedIn</span>
               </a>
             </div>
