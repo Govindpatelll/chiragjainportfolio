@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef } from "react";
+import { Calendar, MapPin, Briefcase, User } from "lucide-react";
 
 const About = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -62,7 +63,7 @@ const About = () => {
           About Me
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-center mt-12">
           <div 
             ref={textRef} 
             className="opacity-0 space-y-6"
@@ -78,18 +79,65 @@ const About = () => {
             <p className="text-lg md:text-xl leading-relaxed">
               I approach each project with meticulous attention to detail and a collaborative mindset, ensuring that data solutions not only meet technical specifications but also address real business needs. Beyond my technical work, I enjoy staying current with the latest advancements in data science and contributing to open-source projects.
             </p>
+
+            <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="glass-card p-4 rounded-lg flex items-center gap-3">
+                <User size={20} className="text-accent-blue" />
+                <div>
+                  <h3 className="text-sm text-medium-gray">Full Name</h3>
+                  <p className="text-white">Chirag Jain</p>
+                </div>
+              </div>
+
+              <div className="glass-card p-4 rounded-lg flex items-center gap-3">
+                <MapPin size={20} className="text-accent-blue" />
+                <div>
+                  <h3 className="text-sm text-medium-gray">Location</h3>
+                  <p className="text-white">Remote / Flexible</p>
+                </div>
+              </div>
+
+              <div className="glass-card p-4 rounded-lg flex items-center gap-3">
+                <Briefcase size={20} className="text-accent-blue" />
+                <div>
+                  <h3 className="text-sm text-medium-gray">Experience</h3>
+                  <p className="text-white">Data Engineering</p>
+                </div>
+              </div>
+
+              <div className="glass-card p-4 rounded-lg flex items-center gap-3">
+                <Calendar size={20} className="text-accent-blue" />
+                <div>
+                  <h3 className="text-sm text-medium-gray">Availability</h3>
+                  <p className="text-white">Available Now</p>
+                </div>
+              </div>
+            </div>
           </div>
           
           <div 
             ref={imageRef} 
-            className="opacity-0 glass-card rounded-2xl overflow-hidden aspect-square relative"
+            className="opacity-0 glass-card rounded-2xl overflow-hidden p-1.5 relative h-[450px]"
           >
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-40 h-40 md:w-52 md:h-52 rounded-full bg-gradient-to-r from-accent-blue to-accent-blue-light flex items-center justify-center text-6xl md:text-7xl font-bold text-white">
-                CJ
-              </div>
+            <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+              <img 
+                src="/lovable-uploads/3b01c9c2-501e-458d-a1af-112bf263f648.png" 
+                alt="Chirag Jain" 
+                className="w-full h-full object-cover rounded-xl"
+              />
             </div>
-            <div className="absolute inset-0 bg-accent-blue/5 backdrop-blur-sm"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-dark-bg/80 rounded-xl"></div>
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
+              <a 
+                href="https://www.linkedin.com/in/chirag-jain-aa566a205" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn-primary text-sm px-4 py-2 inline-flex items-center gap-1"
+              >
+                <Linkedin size={16} />
+                <span>Connect on LinkedIn</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>

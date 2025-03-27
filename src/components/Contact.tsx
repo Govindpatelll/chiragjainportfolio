@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
-import { Send, Loader2 } from "lucide-react";
+import { Send, Loader2, Mail, Phone, Linkedin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
@@ -117,19 +117,23 @@ const Contact = () => {
                   
                   <div className="space-y-4">
                     <p className="flex items-start gap-3 text-white/90">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="2"/>
-                        <path d="M3 7L12 13L21 7" stroke="currentColor" strokeWidth="2"/>
-                      </svg>
-                      <a href="mailto:chirag.jain@example.com" className="hover:text-white transition-colors">
-                        chirag.jain@example.com
+                      <Mail size={20} className="shrink-0 mt-1" />
+                      <a href="mailto:chiragjainswm@gmail.com" className="hover:text-white transition-colors">
+                        chiragjainswm@gmail.com
                       </a>
                     </p>
                     
                     <p className="flex items-start gap-3 text-white/90">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M21 8V16C21 18.2091 19.2091 20 17 20H7C4.79086 20 3 18.2091 3 16V8M3.05 8L12 14L20.95 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M3 8C3 5.79086 4.79086 4 7 4H17C19.2091 4 21 5.79086 21 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                      <Phone size={20} className="shrink-0 mt-1" />
+                      <a href="tel:+917976075644" className="hover:text-white transition-colors">
+                        +91 7976075644
+                      </a>
+                    </p>
+                    
+                    <p className="flex items-start gap-3 text-white/90">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0 mt-1">
+                        <path d="M3 5L12 13L21 5" stroke="currentColor" strokeWidth="2"/>
+                        <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="2"/>
                       </svg>
                       <span>
                         Location: Remote / Location Flexible
@@ -143,17 +147,13 @@ const Contact = () => {
                   
                   <div className="flex gap-4">
                     <a 
-                      href="https://linkedin.com/in/" 
+                      href="https://www.linkedin.com/in/chirag-jain-aa566a205" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition-colors"
                       aria-label="LinkedIn"
                     >
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <rect x="2" y="9" width="4" height="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        <circle cx="4" cy="4" r="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                      <Linkedin size={20} />
                     </a>
                     
                     <a 

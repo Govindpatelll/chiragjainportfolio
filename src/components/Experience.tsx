@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef } from "react";
+import { Calendar, Building2, Award } from "lucide-react";
 
 interface ExperienceItem {
   title: string;
@@ -18,7 +19,7 @@ const Experience = () => {
     {
       title: "Data Engineer Intern",
       company: "Confidential Client Project",
-      period: "Jan 2023 - Apr 2023",
+      period: "December 2024",
       description: [
         "Performed comprehensive Exploratory Data Analysis (EDA) to uncover initial patterns and insights from raw customer data",
         "Implemented rigorous data cleaning and standardization techniques to ensure high data quality and consistency",
@@ -136,20 +137,34 @@ const Experience = () => {
               <div className="glass-card glass-card-hover rounded-xl p-6 md:p-8">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                   <h3 className="text-xl font-medium text-white">{exp.title}</h3>
-                  <span className="text-accent-blue font-medium mt-1 md:mt-0">{exp.period}</span>
+                  <span className="inline-flex items-center gap-1.5 text-accent-blue font-medium mt-1 md:mt-0">
+                    <Calendar size={16} className="inline-block" />
+                    {exp.period}
+                  </span>
                 </div>
                 
-                <p className="text-xl mb-4 text-white/90">{exp.company}</p>
+                <p className="text-xl mb-2 text-white/90 flex items-center gap-2">
+                  <Building2 size={18} className="text-accent-blue" />
+                  {exp.company}
+                </p>
                 
-                <ul className="list-disc list-inside space-y-2 mb-6">
-                  {exp.description.map((point, i) => (
-                    <li key={i} className="text-light-gray">{point}</li>
-                  ))}
-                </ul>
+                <div className="border-l-2 border-accent-blue/30 pl-4 mt-6 mb-6">
+                  <h4 className="text-lg font-medium text-white mb-2 flex items-center gap-2">
+                    <Award size={18} className="text-accent-blue" />
+                    Key Responsibilities
+                  </h4>
+                  <ul className="list-disc list-inside space-y-2">
+                    {exp.description.map((point, i) => (
+                      <li key={i} className="text-light-gray">
+                        <span className="ml-1">{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 
                 <div className="flex flex-wrap gap-2">
                   {exp.technologies.map((tech, i) => (
-                    <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm">
+                    <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm hover:bg-white/10 transition-colors cursor-default">
                       {tech}
                     </span>
                   ))}

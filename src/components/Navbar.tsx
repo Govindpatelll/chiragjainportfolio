@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Mail, Phone } from "lucide-react";
 
 interface NavItem {
   name: string;
@@ -13,6 +13,7 @@ const navItems: NavItem[] = [
   { name: "Skills", href: "#skills" },
   { name: "Experience", href: "#experience" },
   { name: "Projects", href: "#projects" },
+  { name: "Resume", href: "#resume" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -92,8 +93,28 @@ const Navbar = () => {
           <span>Chirag Jain</span>
         </a>
 
+        <div className="hidden md:flex items-center gap-4">
+          <a 
+            href="mailto:chiragjainswm@gmail.com" 
+            className="text-medium-gray hover:text-white transition-colors flex items-center gap-1.5 text-sm"
+          >
+            <Mail size={16} />
+            <span>chiragjainswm@gmail.com</span>
+          </a>
+          
+          <span className="h-4 w-px bg-white/10"></span>
+          
+          <a 
+            href="tel:+917976075644" 
+            className="text-medium-gray hover:text-white transition-colors flex items-center gap-1.5 text-sm"
+          >
+            <Phone size={16} />
+            <span>+91 7976075644</span>
+          </a>
+        </div>
+
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center space-x-8">
+        <nav className="hidden md:flex items-center space-x-6">
           {navItems.map((item) => (
             <a
               key={item.name}
@@ -150,6 +171,24 @@ const Navbar = () => {
           >
             Get in Touch
           </a>
+          
+          <div className="mt-6 flex flex-col gap-3 items-center">
+            <a 
+              href="mailto:chiragjainswm@gmail.com" 
+              className="text-medium-gray hover:text-white transition-colors flex items-center gap-1.5"
+            >
+              <Mail size={16} />
+              <span>chiragjainswm@gmail.com</span>
+            </a>
+            
+            <a 
+              href="tel:+917976075644" 
+              className="text-medium-gray hover:text-white transition-colors flex items-center gap-1.5"
+            >
+              <Phone size={16} />
+              <span>+91 7976075644</span>
+            </a>
+          </div>
         </div>
       </div>
     </header>
