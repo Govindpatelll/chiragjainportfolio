@@ -19,7 +19,7 @@ const Experience = () => {
     {
       title: "Data Engineer Intern",
       company: "Confidential Client Project",
-      period: "December 2024 - 4 months",
+      period: "December 2023 - 4 months",
       description: [
         "Performed comprehensive Exploratory Data Analysis (EDA) to uncover initial patterns and insights from raw customer data",
         "Implemented rigorous data cleaning and standardization techniques to ensure high data quality and consistency",
@@ -123,7 +123,7 @@ const Experience = () => {
           ref={timelineRef} 
           className="mt-16 relative opacity-0"
         >
-          {/* Timeline bar */}
+          {/* Enhanced timeline bar with gradient */}
           <div className="absolute left-0 md:left-1/2 md:transform md:-translate-x-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-accent-blue via-white/20 to-transparent"></div>
           
           {experiences.map((exp, index) => (
@@ -131,14 +131,16 @@ const Experience = () => {
               key={index}
               className="experience-item opacity-0 relative mb-16 md:w-1/2 md:even:ml-auto md:odd:mr-auto md:pl-8 md:even:pl-0 md:even:pr-8"
             >
-              {/* Timeline dot */}
-              <div className="hidden md:block absolute left-0 md:left-auto md:right-0 md:even:left-0 md:even:right-auto top-0 w-4 h-4 rounded-full bg-accent-blue shadow-blue-glow transform -translate-y-1/2 md:even:translate-x-1/2 md:odd:-translate-x-1/2"></div>
+              {/* Enhanced timeline dot with pulse effect */}
+              <div className="hidden md:block absolute left-0 md:left-auto md:right-0 md:even:left-0 md:even:right-auto top-0 w-4 h-4 rounded-full bg-accent-blue shadow-blue-glow transform -translate-y-1/2 md:even:translate-x-1/2 md:odd:-translate-x-1/2">
+                <span className="absolute inset-0 rounded-full bg-accent-blue/50 animate-ping"></span>
+              </div>
               
-              <div className="glass-card glass-card-hover rounded-xl p-6 md:p-8">
+              <div className="glass-card glass-card-hover rounded-xl p-6 md:p-8 border border-accent-blue/10 hover:border-accent-blue/30">
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                   <h3 className="text-xl font-medium text-white">{exp.title}</h3>
                   <span className="inline-flex items-center gap-1.5 text-accent-blue font-medium mt-1 md:mt-0">
-                    <Calendar size={16} className="inline-block" />
+                    <Calendar size={16} className="inline-block animate-pulse-slow" />
                     {exp.period}
                   </span>
                 </div>
@@ -155,8 +157,8 @@ const Experience = () => {
                   </h4>
                   <ul className="list-disc list-inside space-y-2">
                     {exp.description.map((point, i) => (
-                      <li key={i} className="text-light-gray">
-                        <span className="ml-1">{point}</span>
+                      <li key={i} className="text-light-gray group">
+                        <span className="ml-1 group-hover:text-white transition-colors">{point}</span>
                       </li>
                     ))}
                   </ul>
@@ -164,7 +166,7 @@ const Experience = () => {
                 
                 <div className="flex flex-wrap gap-2">
                   {exp.technologies.map((tech, i) => (
-                    <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm hover:bg-white/10 transition-colors cursor-default">
+                    <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm hover:bg-accent-blue/10 hover:border-accent-blue/30 hover:text-white transition-all duration-300 cursor-default">
                       {tech}
                     </span>
                   ))}

@@ -94,21 +94,23 @@ const Index = () => {
     <main className="min-h-screen bg-dark-bg text-light-gray antialiased overflow-hidden">
       <AnimatedCursor />
       
-      {/* Page loader overlay */}
+      {/* Enhanced page loader overlay with more premium effects */}
       {!isPageLoaded && (
         <div className="fixed inset-0 z-50 bg-dark-bg flex flex-col items-center justify-center">
           <div className="text-5xl font-bold mb-8 relative">
             <span className="text-white">C</span>
             <span className="text-accent-blue">J</span>
-            <div className="absolute -top-6 -right-6 w-12 h-12 border-t-2 border-r-2 border-accent-blue opacity-80"></div>
-            <div className="absolute -bottom-6 -left-6 w-12 h-12 border-b-2 border-l-2 border-accent-blue opacity-80"></div>
+            <div className="absolute -top-6 -right-6 w-12 h-12 border-t-2 border-r-2 border-accent-blue opacity-80 animate-pulse-slow"></div>
+            <div className="absolute -bottom-6 -left-6 w-12 h-12 border-b-2 border-l-2 border-accent-blue opacity-80 animate-pulse-slow"></div>
           </div>
           
           <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
             <div 
-              className="h-full bg-gradient-to-r from-accent-blue to-accent-blue-light transition-all duration-300 rounded-full" 
+              className="h-full bg-gradient-to-r from-accent-blue to-accent-blue-light transition-all duration-300 rounded-full relative"
               style={{ width: `${loadingProgress}%` }}
-            ></div>
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" style={{ backgroundSize: '200% 100%' }}></div>
+            </div>
           </div>
           
           <div className="mt-3 text-sm text-medium-gray">
@@ -127,10 +129,10 @@ const Index = () => {
       <Contact />
       <Footer />
       
-      {/* WhatsApp Contact Button */}
+      {/* WhatsApp Contact Button - Now handled by the WhatsAppButton component */}
       <WhatsAppButton />
       
-      {/* Scroll to top button with enhanced styling */}
+      {/* Enhanced scroll to top button with more premium styling */}
       <button 
         onClick={scrollToTop}
         className={`fixed bottom-8 right-8 z-40 w-12 h-12 rounded-full glass-card text-white flex items-center justify-center shadow-blue-glow hover:bg-accent-blue transition-all duration-300 transform hover:scale-110 ${
@@ -139,10 +141,15 @@ const Index = () => {
         aria-label="Scroll to top"
       >
         <ChevronUp size={20} />
+        <div className="absolute inset-0 rounded-full bg-white/5 animate-pulse-slow"></div>
       </button>
       
-      {/* Background gradient */}
+      {/* Enhanced background elements for more premium feel */}
       <div className="fixed bottom-0 left-0 right-0 h-[50vh] bg-gradient-to-t from-black/20 to-transparent pointer-events-none z-[-1]"></div>
+      <div className="fixed top-0 left-0 w-screen h-screen pointer-events-none z-[-2] opacity-30">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-accent-blue/10 animate-pulse-slow filter blur-3xl"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-accent-blue/5 animate-pulse-slow filter blur-3xl"></div>
+      </div>
     </main>
   );
 };

@@ -104,7 +104,7 @@ const ResumeSection = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
               <div className="glass-card p-4 rounded-lg text-center hover:border-accent-blue/20 transition-all duration-300 border border-transparent transform hover:scale-105 hover:shadow-blue-glow-sm">
                 <div className="text-2xl font-bold text-accent-blue mb-1">4+</div>
-                <div className="text-sm text-medium-gray">Years of Experience</div>
+                <div className="text-sm text-medium-gray">Months of Experience</div>
               </div>
               
               <div className="glass-card p-4 rounded-lg text-center hover:border-accent-blue/20 transition-all duration-300 border border-transparent transform hover:scale-105 hover:shadow-blue-glow-sm">

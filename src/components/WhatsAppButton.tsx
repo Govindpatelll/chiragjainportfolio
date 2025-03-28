@@ -34,7 +34,7 @@ const WhatsAppButton = () => {
       target="_blank"
       rel="noopener noreferrer"
       className={`fixed z-50 flex items-center justify-center transition-all duration-500 ${
-        isVisible ? 'right-6 opacity-100' : 'right-0 opacity-0'
+        isVisible ? 'left-6 opacity-100' : 'left-0 opacity-0'
       } bottom-24 md:bottom-16`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -49,16 +49,16 @@ const WhatsAppButton = () => {
           {/* WhatsApp icon */}
           <MessageCircle className="w-7 h-7 text-white" />
           
-          {/* Animated shine effect */}
+          {/* Enhanced animated shine effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" style={{ backgroundSize: '200% 100%' }}></div>
         </div>
         
-        {/* Tooltip */}
-        <div className={`absolute right-16 bg-white text-gray-800 px-3 py-1.5 rounded-lg shadow-lg whitespace-nowrap transition-all duration-300 ${
+        {/* Tooltip - Updated for left side */}
+        <div className={`absolute left-16 bg-white text-gray-800 px-3 py-1.5 rounded-lg shadow-lg whitespace-nowrap transition-all duration-300 ${
           isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-        } transform origin-left`}>
+        } transform origin-right`}>
           <span className="text-sm font-medium">Chat on WhatsApp</span>
-          <div className="absolute -right-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-white"></div>
+          <div className="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-white"></div>
         </div>
       </div>
     </a>
