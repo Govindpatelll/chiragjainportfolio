@@ -1,11 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { MessageCircle } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const WhatsAppButton = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const isMobile = useIsMobile();
   
   // WhatsApp link with pre-filled message
   const whatsappLink = "https://api.whatsapp.com/send?phone=917976075644&text=Hello%20Chirag%2C%20I'm%20reaching%20out%20from%20your%20portfolio%20website.";
@@ -45,18 +47,18 @@ const WhatsAppButton = () => {
         <div className="absolute inset-0 rounded-full bg-green-500 opacity-30 animate-pulse-slow scale-110"></div>
         
         {/* Main button */}
-        <div className="flex items-center justify-center w-14 h-14 rounded-full bg-green-500 shadow-lg hover:shadow-green-500/50 z-10 relative overflow-hidden">
+        <div className="flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-green-500 shadow-lg hover:shadow-green-500/50 z-10 relative overflow-hidden">
           {/* WhatsApp icon */}
-          <MessageCircle className="w-7 h-7 text-white" />
+          <MessageCircle className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
           
           {/* Enhanced animated shine effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" style={{ backgroundSize: '200% 100%' }}></div>
         </div>
         
-        {/* Tooltip - Updated for left side */}
+        {/* Tooltip - Left side */}
         <div className={`absolute left-16 bg-white text-gray-800 px-3 py-1.5 rounded-lg shadow-lg whitespace-nowrap transition-all duration-300 ${
           isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-        } transform origin-right`}>
+        } transform origin-left z-20`}>
           <span className="text-sm font-medium">Chat on WhatsApp</span>
           <div className="absolute -left-1 top-1/2 transform -translate-y-1/2 rotate-45 w-2 h-2 bg-white"></div>
         </div>

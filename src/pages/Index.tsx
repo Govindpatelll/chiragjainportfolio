@@ -12,11 +12,13 @@ import Footer from "@/components/Footer";
 import AnimatedCursor from "@/components/ui/AnimatedCursor";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { ChevronUp } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const [isPageLoaded, setIsPageLoaded] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     // Custom loading animation
@@ -92,12 +94,12 @@ const Index = () => {
 
   return (
     <main className="min-h-screen bg-dark-bg text-light-gray antialiased overflow-hidden">
-      <AnimatedCursor />
+      {!isMobile && <AnimatedCursor />}
       
       {/* Enhanced page loader overlay with more premium effects */}
       {!isPageLoaded && (
         <div className="fixed inset-0 z-50 bg-dark-bg flex flex-col items-center justify-center">
-          <div className="text-5xl font-bold mb-8 relative">
+          <div className="text-4xl sm:text-5xl font-bold mb-8 relative">
             <span className="text-white">C</span>
             <span className="text-accent-blue">J</span>
             <div className="absolute -top-6 -right-6 w-12 h-12 border-t-2 border-r-2 border-accent-blue opacity-80 animate-pulse-slow"></div>
@@ -135,12 +137,12 @@ const Index = () => {
       {/* Enhanced scroll to top button with more premium styling */}
       <button 
         onClick={scrollToTop}
-        className={`fixed bottom-8 right-8 z-40 w-12 h-12 rounded-full glass-card text-white flex items-center justify-center shadow-blue-glow hover:bg-accent-blue transition-all duration-300 transform hover:scale-110 ${
+        className={`fixed bottom-8 right-8 z-40 w-10 h-10 sm:w-12 sm:h-12 rounded-full glass-card text-white flex items-center justify-center shadow-blue-glow hover:bg-accent-blue transition-all duration-300 transform hover:scale-110 ${
           showScrollToTop ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-4'
         }`}
         aria-label="Scroll to top"
       >
-        <ChevronUp size={20} />
+        <ChevronUp size={isMobile ? 18 : 20} />
         <div className="absolute inset-0 rounded-full bg-white/5 animate-pulse-slow"></div>
       </button>
       
@@ -150,6 +152,16 @@ const Index = () => {
         <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-accent-blue/10 animate-pulse-slow filter blur-3xl"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-accent-blue/5 animate-pulse-slow filter blur-3xl"></div>
       </div>
+      
+      {/* Premium floating particles - visible on desktop */}
+      {!isMobile && (
+        <>
+          <div className="fixed top-1/3 left-1/5 w-1 h-16 bg-gradient-to-b from-accent-blue/30 to-transparent rotate-45 animate-pulse-slow pointer-events-none"></div>
+          <div className="fixed bottom-1/3 right-1/5 w-1 h-16 bg-gradient-to-b from-accent-blue/30 to-transparent -rotate-45 animate-pulse-slow pointer-events-none"></div>
+          <div className="fixed top-2/3 right-1/3 w-2 h-2 rounded-full bg-accent-blue/40 animate-ping pointer-events-none" style={{ animationDuration: '4s' }}></div>
+          <div className="fixed bottom-2/3 left-1/3 w-2 h-2 rounded-full bg-accent-blue/40 animate-ping pointer-events-none" style={{ animationDuration: '3s', animationDelay: '1s' }}></div>
+        </>
+      )}
     </main>
   );
 };
