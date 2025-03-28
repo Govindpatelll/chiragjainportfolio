@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Mail, Phone, Linkedin, Github, Heart, ExternalLink } from "lucide-react";
+import { Mail, Phone, Linkedin, Github, Heart, ExternalLink, MessageCircle } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,6 +9,9 @@ const Footer = () => {
     <footer className="py-8 border-t border-white/10 relative">
       <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
         <div className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-accent-blue/10 to-transparent"></div>
+        {/* Decorative elements */}
+        <div className="absolute top-1/4 right-1/4 w-32 h-32 rounded-full border border-accent-blue/20 animate-rotate-slow"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-16 h-16 rounded-full border border-accent-blue/10 animate-rotate-slow" style={{ animationDuration: '12s' }}></div>
       </div>
       
       <div className="max-w-7xl mx-auto px-6 md:px-10 relative">
@@ -29,7 +32,7 @@ const Footer = () => {
                 className="text-medium-gray hover:text-accent-blue transition-all duration-300 transform hover:scale-125"
                 aria-label="LinkedIn"
               >
-                <Linkedin size={20} />
+                <Linkedin size={20} className="hover:drop-shadow-[0_0_8px_rgba(0,119,255,0.8)]" />
               </a>
               
               <a 
@@ -39,7 +42,7 @@ const Footer = () => {
                 className="text-medium-gray hover:text-accent-blue transition-all duration-300 transform hover:scale-125"
                 aria-label="GitHub"
               >
-                <Github size={20} />
+                <Github size={20} className="hover:drop-shadow-[0_0_8px_rgba(0,119,255,0.8)]" />
               </a>
               
               <a 
@@ -47,7 +50,7 @@ const Footer = () => {
                 className="text-medium-gray hover:text-accent-blue transition-all duration-300 transform hover:scale-125"
                 aria-label="Email"
               >
-                <Mail size={20} />
+                <Mail size={20} className="hover:drop-shadow-[0_0_8px_rgba(0,119,255,0.8)]" />
               </a>
 
               <a 
@@ -55,7 +58,17 @@ const Footer = () => {
                 className="text-medium-gray hover:text-accent-blue transition-all duration-300 transform hover:scale-125"
                 aria-label="Phone"
               >
-                <Phone size={20} />
+                <Phone size={20} className="hover:drop-shadow-[0_0_8px_rgba(0,119,255,0.8)]" />
+              </a>
+              
+              <a 
+                href="https://api.whatsapp.com/send?phone=917976075644&text=Hello%20Chirag%2C%20I'm%20reaching%20out%20from%20your%20portfolio%20website."
+                target="_blank"
+                rel="noopener noreferrer" 
+                className="text-medium-gray hover:text-green-500 transition-all duration-300 transform hover:scale-125"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle size={20} className="hover:drop-shadow-[0_0_8px_rgba(72,187,120,0.8)]" />
               </a>
             </div>
             

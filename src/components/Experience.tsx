@@ -19,7 +19,7 @@ const Experience = () => {
     {
       title: "Data Engineer Intern",
       company: "Confidential Client Project",
-      period: "December 2024",
+      period: "December 2024 - 4 months",
       description: [
         "Performed comprehensive Exploratory Data Analysis (EDA) to uncover initial patterns and insights from raw customer data",
         "Implemented rigorous data cleaning and standardization techniques to ensure high data quality and consistency",

@@ -10,6 +10,7 @@ import ResumeSection from "@/components/ResumeSection";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import AnimatedCursor from "@/components/ui/AnimatedCursor";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { ChevronUp } from "lucide-react";
 
 const Index = () => {
@@ -96,9 +97,11 @@ const Index = () => {
       {/* Page loader overlay */}
       {!isPageLoaded && (
         <div className="fixed inset-0 z-50 bg-dark-bg flex flex-col items-center justify-center">
-          <div className="text-5xl font-bold mb-8">
+          <div className="text-5xl font-bold mb-8 relative">
             <span className="text-white">C</span>
             <span className="text-accent-blue">J</span>
+            <div className="absolute -top-6 -right-6 w-12 h-12 border-t-2 border-r-2 border-accent-blue opacity-80"></div>
+            <div className="absolute -bottom-6 -left-6 w-12 h-12 border-b-2 border-l-2 border-accent-blue opacity-80"></div>
           </div>
           
           <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
@@ -124,10 +127,13 @@ const Index = () => {
       <Contact />
       <Footer />
       
+      {/* WhatsApp Contact Button */}
+      <WhatsAppButton />
+      
       {/* Scroll to top button with enhanced styling */}
       <button 
         onClick={scrollToTop}
-        className={`fixed bottom-8 right-8 z-40 w-12 h-12 rounded-full glass-card text-white flex items-center justify-center shadow-blue-glow hover:bg-accent-blue transition-all duration-300 ${
+        className={`fixed bottom-8 right-8 z-40 w-12 h-12 rounded-full glass-card text-white flex items-center justify-center shadow-blue-glow hover:bg-accent-blue transition-all duration-300 transform hover:scale-110 ${
           showScrollToTop ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible translate-y-4'
         }`}
         aria-label="Scroll to top"
